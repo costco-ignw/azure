@@ -10,7 +10,7 @@ resource "azurerm_subnet" "web" {
   name                 = "web"
   resource_group_name  = azurerm_resource_group.costco.name
   virtual_network_name = azurerm_virtual_network.costco.name
-  address_prefix       = "10.20.2.0/24"
+  address_prefix       = "10.30.2.0/24"
 }
 
 # resource "azurerm_subnet" "app" {
