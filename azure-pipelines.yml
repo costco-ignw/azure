@@ -10,18 +10,31 @@ trigger:
 #   vmImage: 'ubuntu-latest'
 
 steps:
-- task: TerraformTaskV1@0
+# - task: TerraformTaskV1@0
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'init'
+#     backendServiceArm: 'Azure subscription 1(a5e1f313-dcc0-4487-b6b6-ca9a628c4e87)'
+#     backendAzureRmResourceGroupName: 'terraform'
+#     backendAzureRmStorageAccountName: 'ignw'
+#     backendAzureRmContainerName: 'ignw'
+#     backendAzureRmKey: 'terraform.tfstate'
+    
+- task: ArchiveFiles@2
   inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendServiceArm: 'Azure subscription 1(a5e1f313-dcc0-4487-b6b6-ca9a628c4e87)'
-    backendAzureRmResourceGroupName: 'terraform'
-    backendAzureRmStorageAccountName: 'ignw'
-    backendAzureRmContainerName: 'ignw'
-    backendAzureRmKey: 'terraform.tfstate'
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/costco-ignw.azure.$(Build.BuildId).zip'
+    replaceExistingArchive: true
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'costco-ignw.azure'
+#     publishLocation: 'Container'
 
-- task: TerraformTaskV1@0
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    environmentServiceNameAzureRM: 'Azure subscription 1(a5e1f313-dcc0-4487-b6b6-ca9a628c4e87)'
+# - task: TerraformTaskV1@0
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'plan'
+#     environmentServiceNameAzureRM: 'Azure subscription 1(a5e1f313-dcc0-4487-b6b6-ca9a628c4e87)'
