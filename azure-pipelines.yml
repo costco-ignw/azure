@@ -27,11 +27,11 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/costco-ignw.azure.$(Build.BuildId).zip'
     replaceExistingArchive: true
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#     ArtifactName: 'costco-ignw.azure'
-#     publishLocation: 'Container'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'costco-ignw.azure'
+    publishLocation: 'Container'
 
 # - task: TerraformTaskV1@0
 #   inputs:
