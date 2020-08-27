@@ -23,5 +23,5 @@ steps:
 - task: TerraformTaskV1@0
   inputs:
     provider: 'azurerm'
-    command: 'apply'
+    command: 'plan'
     environmentServiceNameAzureRM: 'Azure subscription 1(a5e1f313-dcc0-4487-b6b6-ca9a628c4e87)'
