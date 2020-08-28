@@ -19,7 +19,15 @@ steps:
     # backendAzureRmStorageAccountName: 'ignw'
     # backendAzureRmContainerName: 'ignw'
     # backendAzureRmKey: 'terraform.tfstate'
-    
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'Azure subscription 1(a5e1f313-dcc0-4487-b6b6-ca9a628c4e87)'
+    backendAzureRmResourceGroupName: 'terraform'
+    backendAzureRmStorageAccountName: 'ignw'
+    backendAzureRmContainerName: 'ignw'
+    backendAzureRmKey: 'costco-ignw.azure.$(Build.BuildId)'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'azurerm'
@@ -36,6 +44,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'costco-ignw.azure.$(Build.BuildId)'
     publishLocation: 'Container'
+
 
 
 # - task: TerraformTaskV1@0
