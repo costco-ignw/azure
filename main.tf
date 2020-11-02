@@ -1,17 +1,40 @@
+provider "azurerm" {
+  version = "~> 2.26"
+  features {
 
-resource "azurerm_resource_group" "costco" {
-  name     = "costco"
-  location = "westus"
+  }
 }
 
+locals {
+  location = "West US 2"
+}
 
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "costco"
-    storage_account_name = "ignw"
-    container_name       = "ignw"
-    subscription_id      = "a5e1f313-dcc0-4487-b6b6-ca9a628c4e87"
-    key                  = "terraform.tfstate"
-    access_key           = "LtT5h9p0LqReA/W8YlTpDrelUSlLXZFki+YzWPuFgaAmkKeZ+ztGi/6o1+ypzHOhJkCcOc4oC6wJIihOiWb/Fw=="
-  }
+resource "azurerm_resource_group" "rg" {
+  name     = "sql-mi-poc"
+  location = local.location
+}
+
+module "vnet" {
+  source              = "./Modules/sqlmi-vnet"
+  resource_group_name = azurerm_resource_group.rg.name
+  #route_table_name    = "sql-mi-routetable"
+  vnet_name           = "sql-mi-vnet"
+  #vnet_address_space  = "10.0.0.0/16"
+  location            = "West US 2"
+  subnet_name         = "sql-mi-subnet"
+  subnet_cidr         = "10.0.0.0/28"
+  nsg_name            = "sql-mi-nsg"
+}
+
+module "sql_mi" {
+  source              = "./Modules/cli-sql-mi"
+  #admin_password      = "StrongPassword!@"
+  #admin_user          = "adminuser"
+  name                = "samplesqlmi"
+  resource_group_name = azurerm_resource_group.rg.name
+  subnet_id           = module.vnet.subnet_id
+  #capacity            = 2
+  #license_type        = "BasePrice"
+  #storagesize         = 128
+
 }
