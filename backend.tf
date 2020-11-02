@@ -6,3 +6,4 @@ terraform {
     container_name       = "tfstate"
     key                  = "npprod.terraform.tfstate"
   }
+}
